@@ -1,20 +1,20 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios';
 import Post from './compenents/post';
-
 import './App.css'
 
-function App() {
+function DesplayUsers() {
   const [users, setUsers] = useState([]);
+  
   const [searchInput, setSearchInput] = useState("");
   const [isSubmited, setIsSubmited] = useState(false);
-
-  const findUser = users.find((user) => user.id === Number(searchInput));
-
-
+  
+  const findUser = users.find(
+    (user) => user.id === Number(searchInput));
+  
   useEffect(() => {
     const getData = async () => {
-      const res = await axios.get('https://jsonplaceholder.typicode.com/users/');
+      const res = await axios.get('https://jsonplaceholder.typicode.com/users');
       setUsers(res.data)
     }
     getData();
@@ -22,7 +22,6 @@ function App() {
   
   const handleSubmit = (e) => {
     e.preventDefault();
-
     setIsSubmited(true);
   }
 
@@ -47,15 +46,12 @@ function App() {
 
       { 
         isSubmited && findUser ?
-          <Post 
-            key={findUser.id}
-            name={findUser.name} 
-            username={findUser.username} 
-            email={findUser.email} 
-            city={findUser.address.city} /> : ""
+          <Post user={findUser} /> 
+        : ""
       }
+
     </>
   )
 }
 
-export default App;
+export default DesplayUsers;
